@@ -162,3 +162,21 @@ end
 INTRODUCTION and ELIMINATION RULES
 -/
 
+/-
+For =
+  - introduction rule: eq.refl 
+  - elimination rule: eq.subst
+-/
+
+/-
+For ∀ x, P x
+  - introduction rule, assume arbitrary x, show P x
+  - elimination rule, next time!
+-/
+
+/- 
+For P → Q
+  - introduction rule: assumme arbitrary P, then show Q
+  - elimination rule: next time.
+-/
+
