@@ -6,7 +6,7 @@ Completed by Alexander Sosnkowski and Goirick Saha
 
 
 
-/- #1 
+/- #1
 Suppose that x, y, z, and w are arbitrary objects of some type, 
 T; and suppose further that we know (have proofs of the facts) 
 that  x = y, y = z, and w = z. Give a very, very short English 
@@ -15,7 +15,6 @@ axioms of equality, but either of the theorems about properties
 of equality that we have proven. Hint: There's something about
 this question that makes it much easier to answer than it might
 at first appear.
-
 By the symetric axiom of equality w = z implies z = w. 
 
 -/
@@ -28,7 +27,6 @@ def is a keyword. The name you're binding to your proposition
 is prop_1. The type of the value is Prop (which is the type of
 all propositions in Lean). 
 -/
-
 def prop_1 : Prop := 
   ∀ (T : Type),
     ∀ (z w : T),
