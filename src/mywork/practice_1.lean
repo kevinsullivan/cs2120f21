@@ -1,6 +1,7 @@
 /-
 EQUALITY
 Completed by Alexander Sosnkowski and Goirick Saha
+
 -/
 
 
