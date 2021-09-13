@@ -13,6 +13,12 @@ this question that makes it much easier to answer than it might
 at first appear.
 -/
 
+/-
+Assume x, y, z, and w are arbitrary objects of a type T. Assume x=y
+y=z and, w=z. z=w through the theorem of symmetry in equality applied to w=z.
+-/
+
+
 /- #2
 Give a formal statement of the conjecture (proposition) from
 #1 by filling in the "hole" in the following definition. The
@@ -22,7 +28,8 @@ all propositions in Lean).
 -/
 
 def prop_1 : Prop := 
-  _xs
+  ∀ (T:Type) (x y z w : T), x=y → y=z → w=z → z=w
+
 
 /- #3 (extra credit)
 Give a formal proof of the proposition from #2 by filling in
@@ -33,7 +40,12 @@ again, called eq.refl, eq.subst, eq.symm, eq.trans.
 
 theorem prop_1_proof : prop_1 := 
 begin
-  _
+  unfold prop_1,
+  assume T x y z w,
+  assume e1,
+  assume e2,
+  assume e3,
+  apply eq.symm e3,
 end
 
 /-
@@ -47,12 +59,20 @@ what do you do? (I'm being a little informal in leaving out the
 type of X.) 
 -/
 
+/- 
+Assume a arbitrary object of an arbititrary type. If you prove the rule 
+for that object of that type, it applies to all types and objects
+-/
+
 /- #5
 Suppose you have a proof, let's call it pf, of the proposition,
 (∀ x, P x), and you need a proof of P t, for some particular t.
 Write an expression then uses the elimination rule for ∀ to get
 such a proof. Complete the answer by replacing the underscores
-in the following expression: ( _ _ ). 
+in the following expression: (t : x) → (P x, P t). 
+
+if t is of type x, then because P is a property for all x. P must also be
+a property of t.
 -/
 
 /-
@@ -76,7 +96,7 @@ Hint: put parenthesis around "n + 1" in your answer.
 -/
 
 def successor_of_even_is_odd : Prop := 
-  _
+  ∀ (n : ℕ), ev n → odd (n+1)
 
 /- #7
 Suppose that "its_raining" and "the_streets_are_wet" are
@@ -88,7 +108,7 @@ by filling in the hole
 
 axioms (raining streets_wet : Prop)
 
-axiom if_raining_then_streets_wet : _
+axiom if_raining_then_streets_wet : raining → streets_wet
   
 
 /- #9
@@ -102,7 +122,10 @@ you are asked to use the elimination rule for →.
 axiom pf_raining : raining
 
 example : streets_wet :=
- _
+  begin
+    apply if_raining_then_streets_wet,
+    exact pf_raining,
+  end
 
 /- 
 AND: ∧
