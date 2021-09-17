@@ -201,5 +201,6 @@ as the following check commands reveal.
 Note the difference in naming relative to
 the definitions we give in this file.
 -/
+
 #check @and.comm
 #check @and.assoc
