@@ -85,7 +85,16 @@ end
 
 example : ∀ (P Q R : Prop), P ∧ (Q ∨ R) ↔ (P ∧ Q) ∨ (P ∧ R) := 
 begin
-  
+  assume P Q R,
+  apply iff.intro,
+  --forward
+    assume pandqorr,
+    have p : P := and.elim_left pandqorr,
+    have qorr : Q ∨ R := and.elim_right pandqorr,
+    apply or.elim qorr,
+    --first disjunct
+      assume q,
+      have pq : P ∧ Q := and.intro p q,
 end
 
 example : ∀ (P Q R : Prop), P ∨ (Q ∧ R) ↔ (P ∨ Q) ∧ (P ∨ R) := 
