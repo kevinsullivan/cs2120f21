@@ -15,6 +15,7 @@ axioms of equality, but either of the theorems about properties
 of equality that we have proven. Hint: There's something about
 this question that makes it much easier to answer than it might
 at first appear.
+
 By the symetric axiom of equality w = z implies z = w. 
 
 -/
