@@ -167,6 +167,10 @@ theorem and_associative :
 begin
   intros P Q R h,
   have p : P := and.elim_left h,
+  have qr : Q ∧ R := and.elim_right h,
+  have r : R := and.elim_right qr,
+  have q : Q := and.elim_left qr,
+  exact and.intro (and.intro p q) r,
 end
 
 /- #11
@@ -180,10 +184,12 @@ proof, let's call it p_qr, of (P ∧ (Q ∧ R)) [by
 application of ∧ and → introduction.] What now
 remains to be proved is ((P ∧ Q) ∧ R). We can
 construct a proof of this proposition by applying
-_____ to a proof of (P ∧ Q) and a proof of R.
+and elimination rule 1 and 2 to a proof of (P ∧ Q) and a proof of R.
 What remains, then, is to obtain these proofs.
 But this is easily done by the application of
-____ to ____. QED. 
+and introduction to (P ∧ Q) and (R)). QED. 
+
+^^check this it seems I have done something wrong
 -/
 
 
