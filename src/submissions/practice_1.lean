@@ -184,10 +184,14 @@ proof, let's call it p_qr, of (P ∧ (Q ∧ R)) [by
 application of ∧ and → introduction.] What now
 remains to be proved is ((P ∧ Q) ∧ R). We can
 construct a proof of this proposition by applying
-and introduction to a proof of (P ∧ Q) and a proof of R.
+"and introduction" to a proof of (P ∧ Q) and a proof of R.
 What remains, then, is to obtain these proofs.
 But this is easily done by the application of
-and elmination to P ∧ Q. QED. 
+"and elmination" to P ∧ (Q ∧ R) to get proofs for P and (Q ∧ R). 
+The elimination of and is applied to (Q ∧ R) once more
+to give proofs for Q along with R. As stated above these are combined with the introduction rule for and. 
+QED. 
+-/ 
 
 /-
 Note that Lean includes versions of these
