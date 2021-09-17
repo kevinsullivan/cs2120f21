@@ -1,3 +1,21 @@
+
+theorem and_associative : ∀ (P Q R : Prop), (P ∧ Q) ∧ R → P ∧ (Q ∧ R):=
+begin
+  assume P Q R,
+  assume h,
+  apply and.intro,
+  have pq : P ∧ Q := and.elim_left h,
+  have p : P := and.elim_left pq,
+  exact p,
+  have r : R := and.elim_right h, 
+  have pq : P ∧ Q := and.elim_left h,
+  have q : Q := and.elim_right pq,
+  have qr : Q ∧ R := and.intro q r,
+  exact qr,
+end
+
+
+
 /-
 The or connective, ∨, in predicate logic
 join any two propositions, P, Q, into a
@@ -62,7 +80,9 @@ axioms (Joe_is_tall Joe_chews_gum : Prop)
 axiom jcg: Joe_chews_gum
 
 theorem jcg_or_jit: Joe_chews_gum ∨ Joe_is_tall :=
-  or.intro_left Joe_is_tall jcg 
+begin
+  exact or.intro_left Joe_is_tall jcg,
+end
 
 /-
 Exercise: Formalize our second version of this
