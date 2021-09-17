@@ -29,7 +29,7 @@ begin
       exact or.intro_right P P2,
 end
 
-#check @or.intro_right
+#check @or.intro_left
 
 example : ∀ (P : Prop), P ∧ P ↔ P := 
 begin
