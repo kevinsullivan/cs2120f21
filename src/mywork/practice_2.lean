@@ -13,7 +13,7 @@ example : false := -- I cannot answer this with a proof, it does not exist. tric
 
 example : ∀ (P : Prop), P ∨ P ↔ P := 
 begin
-  assume (P),
+  assume P,
   apply iff.intro _ _,
   -- forwards
     assume porp,
@@ -33,18 +33,77 @@ end
 
 example : ∀ (P : Prop), P ∧ P ↔ P := 
 begin
+  assume P,
+  apply iff.intro _ _,
+  -- forwards
+    assume por,
+    apply and.elim_left por,
+  --backwords 
+    assume por2,
+    apply and.intro por2 por2,
 end
 
 example : ∀ (P Q : Prop), P ∨ Q ↔ Q ∨ P := 
 begin
+  assume P,
+  assume Q,
+  apply iff.intro _ _,
+  --forwards
+    assume z,
+    apply or.symm z,
+  --backwords
+    assume z2,
+    apply or.symm z2,
 end
 
 example : ∀ (P Q : Prop), P ∧ Q ↔ Q ∧ P := 
 begin
+  assume Q,
+  assume P,
+  apply iff.intro _ _,
+  --forwards
+    assume z,
+    apply and.symm z, 
+  --backwards
+    assume z2,
+    apply and.symm z2, 
 end
 
 example : ∀ (P Q R : Prop), P ∧ (Q ∨ R) ↔ (P ∧ Q) ∨ (P ∧ R) := 
 begin
+  assume p,
+  assume q,
+  assume r,
+  apply iff.intro _ _,
+  --forwards
+    assume z,
+    have a1 : p := and.elim_left z,
+    have a2 : q ∨ r := and.elim_right z,
+    apply or.elim a2,
+    --forwards
+      assume q,
+      apply or.intro_left _ _,
+      apply and.intro a1 q,
+    --backwards 
+      assume r,
+      apply or.intro_right _ _,
+      apply and.intro a1 r,
+
+  --backwards
+      assume y,
+      apply or.elim y,
+      --forwards
+        assume x,
+        have a3 : p := and.elim_left x,
+        have a4 : q := and.elim_right x,
+        apply and.intro a3 (or.intro_left _ _),
+        apply a4,
+      --backwords 
+        assume v,
+        have a5 : p := and.elim_left v,
+        have a6 : r := and.elim_right v,
+        apply and.intro a5 (or.intro_right _ _),
+        apply a6,
 end
 
 example : ∀ (P Q R : Prop), P ∨ (Q ∧ R) ↔ (P ∨ Q) ∧ (P ∨ R) := 

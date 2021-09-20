@@ -161,6 +161,7 @@ allows you to give a name to a new value in the middle of a
 proof script.
 -/
 
+
 theorem and_associative : 
   ∀ (P Q R : Prop),
   (P ∧ (Q ∧ R)) → ((P ∧ Q) ∧ R) :=
@@ -191,7 +192,8 @@ But this is easily done by the application of
 The elimination of and is applied to (Q ∧ R) once more
 to give proofs for Q along with R. As stated above these are combined with the introduction rule for and. 
 QED. 
--/ 
+-/
+
 
 /-
 Note that Lean includes versions of these
@@ -201,6 +203,5 @@ as the following check commands reveal.
 Note the difference in naming relative to
 the definitions we give in this file.
 -/
-
 #check @and.comm
 #check @and.assoc

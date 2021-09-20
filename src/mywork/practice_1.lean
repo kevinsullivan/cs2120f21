@@ -188,6 +188,7 @@ and introduction to a proof of (P ∧ Q) and a proof of R.
 What remains, then, is to obtain these proofs.
 But this is easily done by the application of
 and elmination to P ∧ Q. QED. 
+-/
 
 /-
 Note that Lean includes versions of these
