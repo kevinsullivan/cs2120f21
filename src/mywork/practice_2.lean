@@ -108,7 +108,38 @@ end
 
 example : ∀ (P Q R : Prop), P ∨ (Q ∧ R) ↔ (P ∨ Q) ∧ (P ∨ R) := 
 begin
+  assume p,
+  assume q,
+  assume r,
+  apply iff.intro _ _,
+  --forwards
+    assume z,
+    apply or.elim z,
+    --forwards once more
+      assume y,
+      apply and.intro (or.intro_left _ _) (or.intro_left _ _),
+      apply y,
+      apply y,
+  --backwards
+    assume x,
+    have x1 : q := and.elim_left x,
+    have x2 : r := and.elim_right x,
+    apply and.intro (or.intro_right _ _) (or.intro_right _ _), 
+    apply x1, 
+    apply x2,
+  --backwards once more
+    assume c,
+    have x3 : p ∨ q := and.elim_left c,
+    have x4 : p ∨ r  := and.elim_right c,
+    apply or.intro_right _ _,
+    apply and.intro _ _,
+     
+    
+  
+
+
 end
+
 
 example : ∀ (P Q : Prop), P ∧ (P ∨ Q) ↔ P := 
 begin
