@@ -131,11 +131,18 @@ begin
     assume c,
     have x3 : p ∨ q := and.elim_left c,
     have x4 : p ∨ r  := and.elim_right c,
-    apply or.intro_right _ _,
-    apply and.intro _ _,
-     
-    
-  
+    cases x3,
+    --case 1
+    apply or.intro_left _,
+    apply x3,
+    apply or.elim x4,
+    assume p,
+    apply or.intro_left _,
+    apply p,
+    --case 2
+    assume r,
+    apply or.intro_right _,
+    exact and.intro x3 r,
 
 
 end
