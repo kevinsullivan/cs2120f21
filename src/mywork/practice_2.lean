@@ -143,33 +143,97 @@ begin
     assume r,
     apply or.intro_right _,
     exact and.intro x3 r,
-
-
 end
 
 
 example : ∀ (P Q : Prop), P ∧ (P ∨ Q) ↔ P := 
 begin
+  assume p q,
+  apply iff.intro _ _,
+  --forwards
+    assume a,
+    have b : p := and.elim_left a,
+    have c : p ∨ q  := and.elim_right a,
+    apply b, 
+  --backwards   
+    assume a,
+    apply and.intro a (or.intro_left _ _),
+    apply a,
 end
 
 example : ∀ (P Q : Prop), P ∨ (P ∧ Q) ↔ P := 
 begin
+  assume p q,
+  apply iff.intro _ _,
+  --forwards
+    assume a,
+    cases a,
+    apply a,
+    apply and.elim_left a,
+  --backwards
+    assume a,
+    apply or.intro_left _ _,
+    apply a,
+
 end
 
 example : ∀ (P : Prop), P ∨ true ↔ true := 
 begin
+  assume P,
+  apply iff.intro _ _,
+  --forwards
+    assume a,
+    apply true.intro,
+  --backwards
+    assume a,
+    apply or.intro_right _ _,
+    apply a,
 end
 
 example : ∀ (P : Prop), P ∨ false ↔ P := 
 begin
+  assume P,
+  apply iff.intro _,
+  --forward
+    assume a,
+    apply or.intro_left _ _,
+    apply a,
+    --backward
+    assume a,
+    apply or.elim a,
+    assume b,
+    apply b,
+    assume f,
+    apply false.elim,
+    apply f, -- this last section is something I need to better understand. 
 end
 
 example : ∀ (P : Prop), P ∧ true ↔ P := 
 begin
+  assume P,
+  apply iff.intro _ _,
+  --forward 
+    assume a,
+    have p : P := and.elim_left a,
+    apply p,
+  --backward 
+    assume a,
+    apply and.intro a _,
+    apply true.intro,  
 end
 
 example : ∀ (P : Prop), P ∧ false ↔ false := 
 begin
+  assume P,
+  apply iff.intro _ _,
+  --forward
+    assume a,
+    have f : false := and.elim_right a,
+    apply f,
+  --backward
+    assume a,
+    apply false.elim,
+    apply a,
 end
 
 
