@@ -1,17 +1,19 @@
-/-
-We
--/
 
+/-
+A simple predicate.
+-/
 def ev (n : ℕ) : Prop := n%2=0
 
+
+/-
+Introduction rule for exists
+-/
 example : exists (n : ℕ), ev n :=
 begin
-  apply exists.intro _ _,
-  exact 6,
-  apply eq.refl,
 end
 
 example : exists n, ev n := _
+
 
 example : exists (a b c : ℕ), a*a + b*c = c*c := 
 _
