@@ -18,7 +18,10 @@ begin
   --have f := c b, or do this and apply f.
   contradiction, -- there could also be case analysis to show no proofs of false
 end  
+
 axioms em : ∀ (p : Prop), p ∨ ¬p
+
+
 theorem neg_elim : ∀ (P : Prop), ¬¬P → P :=
 begin
   assume p,
@@ -38,3 +41,4 @@ end -- this works in classical reasoning but this is not valid in leand construc
 -- using case analysis comes from a disjunction
 
 
+-- everything on hw is proovable
