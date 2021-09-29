@@ -169,3 +169,20 @@ begin                 -- goal is to prove P
                       -- that's the essence of proof by contradiction
                       -- of course we have no information to finish this proof
 end
+
+def pt (a b c : ℕ) : Prop := a*a+b*b=c*c 
+
+example: pt 3 4 5 :=
+begin
+  unfold pt,
+  apply eq.refl,
+end
+
+example : ∃ ( a b c : ℕ ), pt a b c:=
+begin
+  unfold pt,
+  apply exists.intro 3,
+  apply exists.intro 4,
+  apply exists.intro 5,
+  apply eq.refl,
+end 
