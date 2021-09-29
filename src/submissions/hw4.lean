@@ -127,8 +127,7 @@ begin
       apply false.elim,
       exact notpq (or.intro_right P q),
     -- two
-      exact and.intro p q,
-  
+      exact and.intro p q,  
 end
 
 
@@ -162,7 +161,6 @@ begin
         exact or.intro_left _ PnotP,
       -- two
         exact or.intro_right _ (and.intro PnotP pq),
-        
 end
 
 
@@ -171,6 +169,37 @@ theorem distrib_and_or :
   ∀ (P Q R: Prop), (P ∨ Q) ∧ (P ∨ R) ↔
                     P ∨ (Q ∧ R) :=
 begin
+  assume P Q R,
+  apply iff.intro,
+  --forward
+    assume pqr,
+    cases pqr,
+    cases pqr_left,
+    cases pqr_right,
+    --one
+    exact or.intro_left _ pqr_right, --pqr_left works here as well, case 1 and 2 are solved the same hmm?
+
+    --two
+    exact or.intro_left _ pqr_left,
+
+    --three
+      cases pqr_right,
+      --one
+      exact or.intro_left _ pqr_right,
+        
+      --two
+      exact or.intro_right _ (and.intro pqr_left pqr_right),
+
+  --backward
+    assume pqr,
+    cases pqr,
+
+    --one 
+    apply and.intro (or.intro_left Q pqr) (or.intro_left R pqr),
+
+    --two 
+    cases pqr,
+    apply and.intro (or.intro_right P pqr_left) (or.intro_right P pqr_right),
 end
 
 -- remember or is right associative
@@ -180,7 +209,64 @@ theorem distrib_and_or_foil :
   ∀ (P Q R S : Prop),
   (P ∨ Q) ∧ (R ∨ S) ↔
   (P ∧ R) ∨ (P ∧ S) ∨ (Q ∧ R) ∨ (Q ∧ S) :=
+
+
 begin
+  assume P Q R S,
+  apply iff.intro,
+  --forward
+    assume pqrs,
+    cases pqrs with pq rs,
+    cases pq,
+    cases rs,
+    
+    --one 
+      exact or.intro_left _ (and.intro pq rs),
+
+    --two
+      apply or.symm,
+      --have f1 := or.intro_right (P ∧ R) (and.intro pq rs),
+      --have f2 := or.intro_left ((Q ∧ R) ∨ (Q ∧ S)) f1, 
+      have f1 := or.intro_left (Q ∧ R ∨ Q ∧ S) (and.intro pq rs),
+      have f2 := or.intro_left (P ∧ R) (f1),
+      exact f2,
+
+    --three
+    cases rs,
+    --one
+    apply or.symm,
+    -- I need: P ∧ S ∨ Q ∧ R ∨ Q ∧ S
+    have f1 := or.intro_right (P ∧ S) (or.intro_left (Q ∧ S) (and.intro pq rs)),
+    have f2:= or.intro_left (P ∧ R) f1,
+    exact f2,
+
+    --two
+    apply or.symm,
+    have f1 := or.intro_right (P ∧ S) (or.intro_right (Q ∧ R) (and.intro pq rs)),
+    have f2 := or.intro_left (P ∧ R) f1,
+    exact f2,
+
+
+  --backward
+  assume pqr,
+  cases pqr,
+  
+  --one
+  cases pqr,
+  exact and.intro (or.intro_left Q (pqr_left) ) (or.intro_left S (pqr_right) ),
+  --two
+  cases pqr,
+  cases pqr,
+  exact and.intro (or.intro_left Q pqr_left) (or.intro_right R pqr_right),
+
+  --three
+  cases pqr,
+  cases pqr,
+  exact and.intro (or.intro_right P pqr_left) (or.intro_left S pqr_right),
+
+  --four 
+  cases pqr,
+  exact and.intro (or.intro_right P pqr_left) (or.intro_right R pqr_right),
 end
 
 
@@ -188,22 +274,70 @@ end
 Formally state and prove the proposition that
 not every natural number is equal to zero.
 -/
-lemma not_all_nats_are_zero : _ :=
+lemma not_all_nats_are_zero : ∃ (p : ℕ), p ≠ 0 :=
 begin
+  apply exists.intro 1 _,
+  assume z,
+  contradiction,
 end 
 
 -- 11. equivalence of P→Q and (¬P∨Q)
 example : ∀ (P Q : Prop), (P → Q) ↔ (¬P ∨ Q) :=
 begin
+  assume P Q,
+  apply iff.intro,
+  --forwards
+    --one
+    assume pq,
+    have p := classical.em P,
+    cases p,
+    have a := pq p,
+    exact or.intro_right _ a,
+
+    --two 
+    exact or.intro_left _ p,
+
+  --backwards
+    assume pq,
+    cases pq,
+    --one
+    assume p,
+    apply false.elim,
+    exact pq p,
+
+    --two 
+      assume p,
+      exact pq,
 end
 
 -- 12
 example : ∀ (P Q : Prop), (P → Q) → (¬ Q → ¬ P) :=
 begin
+  assume P Q A B,
+  have a := classical.em P,
+  cases a,
+
+  --one
+  have b := A a,
+  have c := B b,
+  contradiction,
+
+  --two
+  exact a,
 end
 
 -- 13
 example : ∀ (P Q : Prop), ( ¬P → ¬Q) → (Q → P) :=
 begin
+  assume P Q a b,
+  have c := classical.em P,
+  cases c,
+
+  --one
+  exact c,
+
+  --two
+  have d := a c,
+  contradiction,
 end
 
