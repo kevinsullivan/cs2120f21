@@ -12,15 +12,23 @@ end
 example : 0 ≠ 0 → 2 = 3 :=
 begin
   assume h,
+  have zeqz := eq.refl 0,
+  contradiction,
+end
+
+-- both accomplish the same
+example : 0 ≠ 0 → 2 = 3 :=
+begin
+  assume h,
   have f : false := h (eq.refl 0),
-  exact false.elim (f),
+  exact false.elim f,
 end
 
 -- 3
 example : ∀ (P : Prop), P → ¬¬P :=
 begin
   assume P,
-  assume (p : P),
+  assume p,
   -- ¬¬P
   -- ¬P → false
   -- (P → false) → false
