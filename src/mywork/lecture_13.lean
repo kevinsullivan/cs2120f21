@@ -169,6 +169,7 @@ English language sentences.
 -- Everyone likes anyone who is nice
 
 -- No one likes anyone who is not nice
+/-if there exists someone who is not nice-/
 
 /-
 If everyone who's nice likes someone, then
