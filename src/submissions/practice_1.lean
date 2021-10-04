@@ -17,7 +17,7 @@ this question that makes it much easier to answer than it might
 at first appear.
 
 By the symetric axiom of equality w = z implies z = w. 
-
+Corrected in class as: by the symetric property (not axiom) of equality w = z implies z = w.
 -/
 
 
@@ -30,7 +30,7 @@ all propositions in Lean).
 -/
 def prop_1 : Prop := 
   ∀ (T : Type),
-    ∀ (z w : T),
+    ∀ (z w : T), -- in class corrected: I cut out the y and x part but should have included them in the proposition 
     w = z → z = w
 
 /- #3 (extra credit)
@@ -70,6 +70,21 @@ such a proof. Complete the answer by replacing the underscores
 in the following expression: ( t : x → pf → P t ). 
 -/
 
+--added in class, instantiation versus generalization
+axioms 
+(Ball : Type)
+(blue : Ball → Prop) --blue is a predicate. Takes is a function that gives you a proposition, predicate
+(allBallsBlue : ∀ (b : Ball), blue b) -- so can till if something is proof if it doesn't contain prop 
+(tomBall : Ball)
+
+example : blue tomBall :=
+begin
+  exact allBallsBlue _, --elimination rule for universal gennerlization
+end
+-- for all and implies are very similar, assume something then show it
+-- I need to understand the logic / reasoning above!
+
+
 /-
 IMPLIES: →
 
@@ -101,6 +116,8 @@ what follows. Then give a formal definition of the (larger)
 proposition, "if it's raining out then the streets are wet")
 by filling in the hole
 -/
+
+
 
 axioms (raining streets_wet : Prop)
 
@@ -142,7 +159,7 @@ a formal version of this proof as a reminder, next.
 theorem and_commutative : ∀ (P Q : Prop), P ∧ Q → Q ∧ P :=
 begin
   assume P Q pq,
-  apply and.intro _ _,
+  apply and.intro _ _, -- added in class this is a top down example
   exact (and.elim_right pq),
   exact (and.elim_left pq),
 end
