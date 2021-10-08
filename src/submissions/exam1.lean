@@ -44,10 +44,12 @@ rule for →.
              (q : Q)
      
     In English: Given a proposition P and implication P → Q,
-    a proof of Q can be derived from the proof of P → Q by applying the P → Q to the proof of P.
+    a proof of Q can be derived from the proof of P → Q by applying the proof of P → Q to the proof of P.
+    We may translate the statement P → Q to If P then Q. Thus, if given some P we can ascertain Q.
 
-    In constructive logic: Given some implication P → Q, it is treated as a function
-    where upon recieving a proof of P, returns a proof for Q near identically to a ∀ statement. 
+    In constructive logic, given some implication P → Q, it is treated as a function
+    where upon recieving a proof of P, returns a proof for Q simillar to a ∀ statement. 
+    Lean treats P → Q as a function with one input (proof of P) and one output (proof of Q)
 -/
 
 -- Give a formal proof of the following
@@ -59,7 +61,8 @@ end
 
 -- Extra credit [2 points]. Who invented this principle?
 
--- I believe Greek Philosipher Aristotle invented the principle of implication's elimination rule.  
+-- I believe Greek Philosipher Aristotle invented the principle of implication's elimination rule
+-- calling it "modus ponens".  
 
 -- -------------------------------------
 
@@ -80,14 +83,17 @@ Give a brief English language explanation of
 the introduction rule for true.
 
 The introduction rule for true is that it is simply, by defenition, true. For any proposition true,
-it will be true and the proof of this is represented in lean as true.intro. Thus any goal true
-can be trivially solved by invoking true.intro in lean.
+it will be true and the proof of this is trivial. Thus any goal true
+can be trivially solved by invoking the introduction rule for true. 
+
+In constructive logic, true's introduction rule is represented by a proof for true
+called true.intro in lean. Envoking this on any goal of true will prove and resolve the goal. 
 
 
 ELIMINATION
 
 Give an English language description of the
-eliimination rule for true.
+elimination rule for true.
 
 [Our answer]
 
@@ -97,10 +103,7 @@ there's no use for an elimination rule.
 
 -- Give a formal proof of the following:
 
-example : true := --I filled in the blank with begin and end instead of just true.intro?
-begin
-  exact true.intro,
-end
+example : true := true.intro 
 
 -- -------------------------------------
 
@@ -121,7 +124,7 @@ Given an English language description of
 this inference rule. What does it really
 say, in plain simple English. 
 
--- Given a proof of proposition P and a proof of proposition Q, a proof can be constructed for P and Q. 
+-- Given a proof of proposition P and a proof of proposition Q, a proof can be constructed for P ∧ Q. 
 It effectively lets us combine two smaller proofs into a larger, conjoined proof of P ∧ Q 
 that states both are true. This makes intuitive sense as if P is true and Q is true, then P ∧ Q must be true.
 
@@ -133,13 +136,16 @@ inference rule and English language forms.
 Inference form:
 
 (P Q : Prop) (pq : P ∧ Q)
---------------------------- intro.left
+--------------------------- elim_left
 (p : P)
---------------------------- intro.right
+--------------------------- elim_right
 (q : Q)
 
 English form: Given a proof of P ∧ Q, the proof can be deconstructed into smaller proofs for either
 P or Q. If we know that P ∧ Q is true, then we must know that P and Q are independently true.
+
+In constructive logic, P ∧ Q is a proof of two smaller units - a proof of P and a proof of Q.
+These two smaller proofs are combined into one, larger proof of P ∧ Q.  
 
 -/
 
@@ -168,9 +174,12 @@ given type), how do you prove ∀ (t : T), Q? What is
 the introduction rule for ∀?
 
 -- To prove ∀ (t : T), Q or any other valid ∀ statement, some arbitrary t can be assumed.
-From this t it must be proved that Q follows. The introcution rule of ∀ allows us to
-assume an arbitrary t (or any other relevant, arbitrary variable) and then show Q. 
+From this t it must be proved that Q follows. The introduction rule of ∀ allows us to
+assume an arbitrary t (or any other relevant, arbitrary variable) and then show Q follows from this assumption. 
 It is similar to the introduction rule for implication and the proof strategy is remarkably similar.
+
+In constructive logic, ∀ is similar to a function that recieves some t of type T and returns Q. If it can
+be shown that such a function is definable, then you have proven the ∀.   
 
 ELIMINATION
 
@@ -181,10 +190,15 @@ what it says.
 
 (T : Type) (Q : Prop), (pf : ∀ (t : T), Q) (t : T)
 -------------------------------------------------- elim
-                Q 
+                (q : Q) 
 
--- English language answer: Given a for all statement, it can be considered a function that upon
-recieving a t of type T, returns a proof for prop Q.
+-- English language answer: ∀ has an elimination rule that lets us take a general statement
+about an object and apply it to a specific case. If I know that for all natural numbers that have a 
+remainder of 0 when divided by two that natural number is even, then I can look at a specific natural number
+that has a zero remainder when divided by 2 (such as 4) and conclude it is even.  
+
+In constructive logic a ∀ statement can be considered (and in lean literally is) a function that
+upon recieving a t of type T, returns a proof Q. 
 
 Given a proof, (pf : ∀ (t : T), Q), and a value, (t : T),
 briefly explain in English how you *use* pf to derive a
@@ -193,6 +207,8 @@ proof of Q.
 -- If we know that in the general case objects of type T have property Q, we can take
 the generalization and apply it specifically to one given object of type T.  
 -- in lean this would look like: have proofOfQ := pf t,
+pf (i.e the ∀ statement) is a function that when given an input of t, returns a proof of Q.
+Therefore, pf t returns a proof of Q. 
 This is similar to the elimination rule for implications. 
 -/
 
@@ -247,8 +263,8 @@ strategy to prove a proposition, ¬P.
 
 -- The proof strategy involves showing that ¬P is true by showing 
 -- the logically equivelent statement P → false is true. 
--- By the introduction rule of implications, this is simplified into assuming p and showing some
--- contradiction by way of this assumption exists, therefore P → false and therefore ¬P has been proven. 
+-- By the introduction rule of implications, this is simplified into assuming P and showing some
+-- contradiction by way of this assumption occurs, therefore P → false and therefore ¬P has been proven. 
 
 /-
 Explain precisely in English the "proof strategy"
@@ -266,8 +282,9 @@ seen that the inference rule you apply in the
 last step is not constructively valid but that it
 is clasically valid, and that accepting the axiom
 of the excluded middle suffices to establish negation
-elimination (better called double not elimination)
+elimination (better called double negation elimination)
 as a theorem.
+
 -/
 
 
@@ -295,7 +312,7 @@ as → has higher precedence than ↔. Recall
 that iff has both elim_left and elim_right
 rules, just like ∧.
 -/
--- is it alright if I proved ↔ instead of just → ?
+-- ↔ was used over → in the example below for completness and to show the communitive property works both ways
 example : ∀ (P Q : Prop), (P ↔ Q) ↔ (Q ↔ P) :=
 begin
   assume P Q,
@@ -311,7 +328,6 @@ begin
   have q := iff.elim_left qp,
   have p := iff.elim_right qp,
   exact iff.intro p q,
-
 end
 
 
@@ -347,9 +363,11 @@ def ELJL : Prop :=
     (JLNT : Nice JohnLennon ∧ Talented JohnLennon),
     (∀ (p : Person), Likes p JohnLennon) 
 /-
-For all persons, there may be some who are nice or talented and some people like other people.
-For all people, if they are talented they are nice and therefore all other people like them.
-John Lennon is a person who is both nice and talented, which in turn means everyone likes him.   
+For all persons, there may be some who are nice or talented, and some people like other people.
+For all persons, if a person is nice as well as talented, all persons (including themself) will like them.
+John Lennon is a person who is both nice and talented; everyone likes John Lennon. 
+
+Given these truths, it can be shown that everyone likes John Lennon as seen in the proof below.   
 -/    
 
 example : ELJL :=
@@ -373,9 +391,9 @@ is rad, then:
     -- heavy red
     -- heavy blue
     -- light red
-    -- light blue
-
+    -- light blue 
 -/
+
 
 /-
   *********
@@ -451,7 +469,7 @@ begin
     cases pp,
       --one
         assume p,
-        trivial, --I need to look more into this
+        trivial, 
       --two 
       assume np,
       contradiction,
