@@ -4,6 +4,9 @@ begin
   -- ¬ (0 = 1)
   -- (0 = 1) → false
   assume h,
+  --have f := eq.refl 0,
+  --contradiction, this will also work
+  --you can also use the trivial tactic 
   cases h,
 end
 
@@ -20,7 +23,7 @@ end
 example : ∀ (P : Prop), P → ¬¬P :=
 begin
   assume P,
-  assume (p : P),
+  assume (p),
   -- ¬¬P
   -- ¬P → false
   -- (P → false) → false
@@ -54,7 +57,10 @@ begin
   have pornp := classical.em P,
   cases pornp with p pn,
   assumption,
-  contradiction,
+  --have f := h pn,
+  --apply false.elim f, this also works
+  contradiction
+  --this is a proof by contradiction. not constructively valid, only works with classical reasoning  
 end
 
 -- 5
@@ -74,7 +80,7 @@ begin
   have a := classical.em A, 
   have b := classical.em B,
   --have aab := and.intro a b,
-  apply iff.intro,
+  apply iff.intro, --split is a neat intro rule for iff and ∧ 
   -- forwards
     assume a1,
     cases a,

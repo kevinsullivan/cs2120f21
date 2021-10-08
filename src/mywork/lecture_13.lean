@@ -230,3 +230,4 @@ end
 
  axiom triangle : Person → Person → Person → Prop
  axiom triangleDef : (∀ (p1 p2 p3 : Person), triangle p1 p2 p3 ↔ Likes p1 p2 ∧ Likes p2 p3 ∧ Likes p3 p1 )
+
