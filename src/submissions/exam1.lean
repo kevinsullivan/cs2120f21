@@ -48,7 +48,7 @@ rule for →.
     We may translate the statement P → Q to If P then Q. Thus, if given some P we can ascertain Q.
 
     In constructive logic, given some implication P → Q, it is treated as a function
-    where upon recieving a proof of P, returns a proof for Q simillar to a ∀ statement. 
+    where upon recieving a proof of P, returns a proof for Q similar to a ∀ statement. 
     Lean treats P → Q as a function with one input (proof of P) and one output (proof of Q)
 -/
 
@@ -142,10 +142,13 @@ Inference form:
 (q : Q)
 
 English form: Given a proof of P ∧ Q, the proof can be deconstructed into smaller proofs for either
-P or Q. If we know that P ∧ Q is true, then we must know that P and Q are independently true.
+P or Q. If we know that P ∧ Q is true, then we know that P and Q must be independently true.
 
 In constructive logic, P ∧ Q is a proof of two smaller units - a proof of P and a proof of Q.
-These two smaller proofs are combined into one, larger proof of P ∧ Q.  
+These two smaller proofs can be abtained by eliminating one side of the proof of P ∧ Q leaving
+either a proof of P or a proof of Q depending on what side was "eliminated".  
+The left elimination rule of ∧ returns a proof for the left side of the conjunction (in this case P) 
+while the right elimination rule returns a proof for the right side of the conjuction (in this case Q).
 
 -/
 
@@ -176,10 +179,11 @@ the introduction rule for ∀?
 -- To prove ∀ (t : T), Q or any other valid ∀ statement, some arbitrary t can be assumed.
 From this t it must be proved that Q follows. The introduction rule of ∀ allows us to
 assume an arbitrary t (or any other relevant, arbitrary variable) and then show Q follows from this assumption. 
+Showing that Q follows from an arbitrary t is sufficent proof for a ∀ statement.
 It is similar to the introduction rule for implication and the proof strategy is remarkably similar.
 
 In constructive logic, ∀ is similar to a function that recieves some t of type T and returns Q. If it can
-be shown that such a function is definable, then you have proven the ∀.   
+be shown that such a function is definable, then you have proven the ∀.    
 
 ELIMINATION
 
