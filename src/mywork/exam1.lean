@@ -126,7 +126,21 @@ inference rule and English language forms.
 -/
 
 /-
-[answer here]
+Left elimination:
+(P Q : Prop) (P ∧ Q)
+--------------------- 
+        (pf : P)
+
+Given a proof of P ∧ Q and P and Q are both propositions,
+one can get a proof of P by left elimination.
+
+Right elimination:
+(P Q : Prop) (P ∧ Q)
+--------------------
+      (pf : Q)
+
+Given a proof of P ∧ Q and a proof that P and Q are propositions,
+one can get a proof of P by right elimination. 
 -/
 
 /-
@@ -253,13 +267,13 @@ Fill in the blanks the following partial answer:
 
 To prove P, assume not P and show that not P is false.
 From this derivation you can conclude ¬¬P.
-Then you apply the rule of negation ____________
+Then you apply the rule of negation introduction
 to that result to arrive a a proof of P. We have
 seen that the inference rule you apply in the 
 last step is not constructively valid but that it
 is classically valid, and that accepting the axiom
 of the excluded middle suffices to establish negation
-__________ (better called double _____ _________)
+proof (better called double negation proof)
 as a theorem.
 -/
 
@@ -395,10 +409,10 @@ the terms means.)
 -/
 
 def eq_is_symmetric : Prop :=
-  ∀ (T : Type) (x y : T), _
+  ∀ (T : Type) (x y : T), x = y ↔ y = x 
 
-def eq_is_transitive : Prop :=
-  _
+def eq_is_transitive : Prop := 
+  ∀ (T : Type) (x y z : T), x = y → y = z → x = z
 
 
 /-
@@ -416,8 +430,26 @@ in one direction and five points for proving it
 both directions. 
 -/
 
-def negelim_equiv_exmid : Prop := 
-  _
+def negelim_equiv_exmid : Prop := ∀ (P : Prop), ¬¬P ↔ P ∨ ¬ P
+
+example : (negelim_equiv_exmid) :=
+begin
+  unfold negelim_equiv_exmid,
+  assume P,
+  apply iff.intro,
+  --forward
+  assume nnp,
+  have pornp := classical.em P,
+  exact pornp,
+  --backward
+  assume pornp,
+  cases pornp,
+  --case 1
+    apply not.intro,
+    assume np,
+    contradiction,
+  --case 2
+end
 
 
 /- 
@@ -429,4 +461,7 @@ thre is someone who loves everyone. [5 points]
 
 axiom Loves : Person → Person → Prop
 
-example : _ := _
+example : (∀ (p : Person), ∃ (q : Person), Loves p q) → 
+          (∃ (p : Person), ∀ (q : Person), Loves p q):= 
+begin
+end
