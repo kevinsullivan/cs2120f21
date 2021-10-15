@@ -26,32 +26,47 @@ set T rather than T → Prop to specify
 the type of a set value.
 -/
 
-def empte : set ℕ := { n : ℕ | _ }
+/-
+A set is defined by a membership predicate
 
-def complete : set ℕ := { n : ℕ | _ }
+Display notation:
+-/
+def one_to_four : set ℕ := {1, 2, 3, 4}
 
-def evens : set ℕ := { n : ℕ | true }
+/-
+Not great for infinite sets
+so instead we use 
 
-def ods : set ℕ := { n : ℕ | true }
 
-def evens_union_ods : set ℕ := { n : ℕ | _ }
+Comprehension notation:
+-/
 
-def evens_intersect_ods : set ℕ  := { n : ℕ | _ }
+def empte : set ℕ := { n : ℕ | false }
 
-def evens_complement : set ℕ := { n : ℕ | _ }
+def complete : set ℕ := { n : ℕ | true }
 
-def ods_complement : set ℕ := { n : ℕ | _ }
+def evens : set ℕ := { n : ℕ | ev n }
 
-def evens_intersect_empty : set ℕ := _
+def ods : set ℕ := { n : ℕ | od n }
 
-def evens_intersect_complete : set ℕ := _
+def evens_union_ods : set ℕ := { n : ℕ | ev n ∨ od n }
 
-def evens_union_empty : set ℕ := _
+def evens_intersect_ods : set ℕ  := { n : ℕ | ev n ∧ od n}
 
-def evens_union_complete : set ℕ := _
+def evens_complement : set ℕ := { n : ℕ | ¬ev n }
+
+def ods_complement : set ℕ := { n : ℕ | ¬od n }
+
+def evens_intersect_empty : set ℕ := {n : ℕ | ev n ∧ n ∈ empte}
+
+def evens_intersect_complete : set ℕ := {n : ℕ | ev n ∧ true}
+
+def evens_union_empty : set ℕ := {n : ℕ | ev n ∨ n ∈ empte}
+
+def evens_union_complete : set ℕ := {n : ℕ | ev n ∨ true}
 
 -- fill in additional interesting combinations
-
+def one_t_four : set ℕ := {n : ℕ | n <= 4 ∧ n >= 1}
 
 /-
 SET THEORY NOTATIONS
@@ -154,6 +169,7 @@ if every element in s1 is in s2. We say that s1 is a
 proper subset of s2, written s1 ⊂ s2, if every value
 in s1 is in s2 and some value in s2 is not in s1. 
 -/
+
 
 #check evens ⊆ evens
 #check evens ⊂ evens
