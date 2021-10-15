@@ -12,9 +12,9 @@ Examples:
 
 /-
 We now introduce the algebraic structure
-that we call the set, by explaining what
-are the objects of this type and what are
-the applicable operations.
+that we call the set, by explaining
+the objects of this type and the 
+applicable operations on these objects.
 -/
 
 /- OBJECTS 
