@@ -30,8 +30,6 @@ In this context complete the following tasks:
 
 (1) Write a fluent English-language statement
 of the proposition to be proved. 
-If there exists a proof f of α implies β, and for all
-a of type α 
 
 (2) Provide a formal proof of the proposition.
 
@@ -51,10 +49,20 @@ function that maps/takes every α value that ...
 -- your completed English rendition here:
 -/
 
+/-
+If there exists a proof f of α implies β, and for all
+a of type α if a proposition p of a is true then
+a proposition q of f(a) is also true, and there
+exists a proof of p of a then q of b.
+-/
+
 
 -- Give your formal proof here
 begin
-  _
+  assume h1,
+  assume h2,
+  
+  
 end
   
 
