@@ -61,6 +61,7 @@ exists a proof of p of a then q of b.
 begin
   assume h1,
   assume h2,
+  cases h1,
   
   
 end
