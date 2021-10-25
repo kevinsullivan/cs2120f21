@@ -50,10 +50,23 @@ function that maps/takes every α value that ...
 -/
 
 /-
-If there exists a proof f of α implies β, and for all
-a of type α if a proposition p of a is true then
-a proposition q of f(a) is also true, and there
-exists a proof of p of a then q of b.
+If there is a function that maps every α value with
+property p to a β value with property q and there exists
+a value a of type α with property p then there exists a 
+value b of type β with property q.
+-/
+
+/-
+informal proof:
+
+Assume there exists a mapping of type α to type β such
+that for all α with property p there is a β with property q.
+Also assume that there exists an α with property p. Apply the 
+mapping onto the a of type α to produce b of type β. Because
+a has the property p it follows that b has the property q. 
+Therefore it is true there exsists some b of type β with
+property q. 
+
 -/
 
 
