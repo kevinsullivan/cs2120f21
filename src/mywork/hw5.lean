@@ -75,8 +75,12 @@ begin
   assume h1,
   assume h2,
   cases h1,
-  
-  
+  cases h2,
+  apply exists.intro,
+  have a := h1_h h2_w,
+  have b := a h2_h,
+  have B := h1_w h2_w,
+  exact b,
 end
   
 

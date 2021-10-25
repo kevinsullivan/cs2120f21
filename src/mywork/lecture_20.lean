@@ -288,8 +288,7 @@ end
 
 example : nat.le 0 2 := 
 begin
-  apply nat.less_than_or_equal.step,
-  apply nat.less_than_or_equal.step,
+  repeat{apply nat.less_than_or_equal.step},
   exact nat.less_than_or_equal.refl,
 end
 
