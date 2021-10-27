@@ -61,7 +61,7 @@ in s.
 def mem (a : α) (s : set α) :=
 s a
 
-/-
+/- 
 Note: The use of α in the previous
 definition causes Lean to insert a
 declaration, (α : Type), in the 
