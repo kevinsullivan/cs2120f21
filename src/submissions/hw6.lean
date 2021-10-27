@@ -165,10 +165,79 @@ Exercise: Formally state and prove both formally and
 informally that ∩ is left-distributive over ∩.
 -/
 
+theorem leftDistributiveOverIntersection : ∀(A : Type) (L S Q : set A) (a : A), L ∪ (S ∪ Q) = (L ∪ S) ∪ (L ∪ Q):=
+begin
+  intros A L S Q a,
+  apply set.ext _,
+  assume x,
+  apply iff.intro _ _,
+
+  --forward
+  assume LSQ,
+  cases LSQ,
+
+  --one
+  have f1 := or.intro_left (x ∈ S) LSQ,
+  exact or.intro_left _ f1,
+
+  --two
+  cases LSQ,
+
+    --one
+    have f1 := or.intro_right (x ∈ L) LSQ,
+    exact or.intro_left _ f1,
+
+    --two
+    exact or.intro_right (x ∈ L ∨ x ∈ S) (or.intro_right (x ∈ L) LSQ),
+  
+
+  --backwards 
+  assume LSQ,
+  cases LSQ,
+
+  --one 
+  cases LSQ,
+    --one
+    exact or.intro_left (x ∈ S ∨ x ∈ Q) LSQ,
+
+    --two
+    exact or.intro_right (x ∈ L) (or.intro_left (x ∈ Q) LSQ),
+
+  --two
+  cases LSQ,
+
+  --one 
+  exact or.intro_left (x ∈ S ∨ x ∈ Q) LSQ,
+
+  --two
+  exact or.intro_right (x ∈ L) (or.intro_right (x ∈ S) LSQ),
+end
+
 
 /-
 Exercise: Formally state and prove both formally 
 and informally that ∪ is left-distributive over ∩.
 -/
+
+theorem leftDistributiveOverUnion : ∀(A : Type) (L S Q : set A) (a : A), L ∩ (S ∩ Q) = (L ∩ S) ∩ (L ∩ Q) := 
+begin
+  intros A L S Q a,
+  apply set.ext _,
+  assume x,
+  apply iff.intro _ _,
+
+  --forward
+  assume LSQ,
+  cases LSQ with L SQ,
+  cases SQ with S Q,
+  exact and.intro (and.intro L S) (and.intro L Q),
+
+  --backward
+  assume LSQ,
+  cases LSQ with LS LQ,
+  cases LS with L S,
+  cases LQ with L Q,
+  exact and.intro L (and.intro S Q),
+end
 
 
