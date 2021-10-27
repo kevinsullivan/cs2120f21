@@ -49,7 +49,7 @@ rule for →.
 
     In constructive logic, given some implication P → Q, it is treated as a function
     where upon recieving a proof of P, returns a proof for Q similar to a ∀ statement. 
-    Lean treats P → Q as a function with one input (proof of P) and one output (proof of Q)
+    Lean treats P → Q as a function with one input (proof of P) and one output (proof of Q).
 -/
 
 -- Give a formal proof of the following

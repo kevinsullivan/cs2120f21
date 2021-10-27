@@ -104,3 +104,24 @@ begin
   apply and.elim_right h,
   apply and.elim_left h,
 end 
+
+
+def func : ∀(n : ℕ),  ℕ := 
+begin
+  assume n,
+  exact n,
+end
+
+#reduce func 3
+
+--proof exhibited is irrelevant, we don't care 
+-- in lean a prop that has two different proofs p and q, lean will say p = q
+
+-- in types, things are diferent. tt : bool and ff : bool are not always interchangable 
+-- Charles Saunders Peirce was super underrated -> he moves words to symbols. Then it becomes a branch of mathematics 
+-- he developed predicate logic George Boole -> mathematical formulation of rules of valid thinking -> boolean algebra and logic
+-- In boolean it is either true or false, not proofs. A proposition is either true or false 
+-- constructive logic the only way to show something exits, you need to show one and prove it is true 
+-- most mathematicians assume extra axioms that make it not constructive 
+-- in non-constructive you can prove an exits without the need for some value 
+-- you can prove more, but some stuff gets wierd. Tarskey paradox. 
