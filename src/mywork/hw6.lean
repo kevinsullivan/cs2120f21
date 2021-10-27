@@ -87,17 +87,39 @@ language (informal) proof of this fact.
 example : ∀ (L : set α), L ⊆ L :=
 begin
   assume L,
-  
+  show ∀ (x : α), x ∈ L → x ∈ L,
+  assume x, 
+  assume xinl,
+  exact xinl,
 end
+
+/-
+Assume L is a set of type α. Show L is a subset of itself. The defenition of a 
+subset is ∀ (x : α), x ∈ L → x ∈ L. Assume x is of type α. Assume a proof of 
+x ∈ L. This is exactly x ∈ L, therefore ⊆ is reflexive. 
+-/
 
 --Transitivity
 example : ∀ (A B C : set α), A ⊆ B → B ⊆ C → A ⊆ C :=
 begin
   intros A B C,
-  assume asubb,
-  assume asubc,
-  
+  assume AB,
+  assume BC,
+  show ∀ (x : α), x ∈ A → x ∈ C,
+  assume x, 
+  assume xinA,
+  have xinB := AB xinA,
+  have xinC := BC xinB,
+  exact xinC,
 end 
+
+/-
+Assume A B and C are sets of type α. Show that if A is a subset of B and B is a
+subset of C then A is a subset of C. First assume A is a subset of B, then assume
+B is a subset of C. Then rewrite A ⊆ C as ∀ (x : α), x ∈ A → x ∈ C. Assume x is 
+of type α and assume x is in A. Then use the proof of A ⊆ B to show x ∈ B. Next, 
+use the proof of B ⊆ C to show that x ∈ C. Therefore A ⊆ C is true. 
+-/
 
 
 /-
