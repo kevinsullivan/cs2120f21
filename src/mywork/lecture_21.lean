@@ -271,6 +271,11 @@ def transitive := ∀ ⦃x y z⦄, x ≺ y → y ≺ z → x ≺ z
 
 example : transitive (@eq α) :=
 begin
+  unfold transitive,
+  intros x y z,
+  assume xeqy,
+  assume yeqz,
+  exact eq.trans xeqy yeqz,
 end
 
 /-
@@ -287,6 +292,7 @@ lemma mk_equivalence (rfl : reflexive r) (symm : symmetric r) (trans : transitiv
 -- Exercise
 theorem eq_is_equivalence : equivalence (@eq β) :=
 begin
+  
 end
 
 /-
