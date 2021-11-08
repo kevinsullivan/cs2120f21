@@ -106,7 +106,7 @@ Give an English language proof of the preceding theorem.
 Exercise: Prove that for any set, L, L ∩ L = L.
 -/
 
-
+ 
 /-
 Exercise: Give a formal statement and proof, then an 
 English language proof, that the union operator on 

@@ -22,7 +22,7 @@ the variables used in the rest of a given
 definition. We'll see an example shortly.
 -/
 
-#check r   -- two place predicate: relation
+#check r   -- two place predicate: relation - it is not a program, it is a specification 
 
 /-
 We will introduce an infix notation, ≺, 
@@ -32,7 +32,7 @@ the proposition that a is related to b
 by r, we can write (a ≺ b) read as "a
 is related to b." 
 -/
-local infix `≺`:50 := r   -- infix notation
+local infix `≺`:50 := r   -- infix notation -- we just say that this is "is related to"
 
 /-
 With these concepts and notations, we
@@ -101,6 +101,7 @@ to let us write the implicit argument(s)
 explicitly. 
 -/
 begin
+  unfold reflexive,
   assume n,
   apply eq.refl,
 end
@@ -160,7 +161,7 @@ expression.
 -/
 
 def reflexive_relations := 
-  { r : β → β → Prop | reflexive r }
+  { r : β → β → Prop | reflexive r } --the set of all reflexive relationships 
 
 -- That's pretty cool. Says a lot, very precisely.
 
@@ -187,6 +188,8 @@ end
 
 #check (λ x, x + 1)
 
+-- lean is higher (second) order logic, not first order logic. A higher order logic is just more expressive. 
+-- in first order is you cannot quantify over higher order things like functions.
 
 /-
 IMPORTANT ASIDE ON FIRST ORDER PREDICATE LOGIC
@@ -320,3 +323,21 @@ inductive tc {α : Type} (r : α → α → Prop) : α → α → Prop
 end relation
 
 end hidden
+
+
+/-
+natural numbers mod 4 {0,1,2,3}
+4 mod 4 is congruent to 0. 
+
+the congruent relationship -> say {(0,0),(0,4),(4,8),ect}
+we have an equivelence class of values that are congruent to eachother mod4
+
+we have 4 equivelence classes
+
+our equivelence classes remap the natural numbers. 
+
+to show nmod4 is an equivelence relationship we show Reflexivity, Symetric, Transivity. 
+
+mod n is an equivelence relationship
+
+-/

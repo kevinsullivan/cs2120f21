@@ -321,7 +321,7 @@ discussion of functions. The image of
 a set, s, under a function f, is the 
 set of values obtained by applying f
 to every value in s. 
--/
+-/ 
 
 def image (f : α → β) (s : set α) : set β :=
 {b | ∃ a, a ∈ s ∧ f a = b}
