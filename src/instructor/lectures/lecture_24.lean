@@ -1,4 +1,4 @@
-import .lecture_23 
+import .lecture_23a
 
 variables {α β : Type}  (r : β → β → Prop)
 local infix `≺`:50 := r  
@@ -7,10 +7,13 @@ local infix `≺`:50 := r
 CLOSURE OPERATIONS ON RELATIONS
 
 Given a relation, r, the reflexive, symmetric, or
-transitive closure of r is the smallest relation that
+transitive closure of r is "the smallest relation that
 (1) contains r, and (2) contains any additional pairs
 needed to make the resulting relation reflexive, or
-symmetric, or transitive, respectively. 
+symmetric, or transitive, respectively." By smallest
+we mean a relation that contains r and that has the
+fewest additional pairs needed to obtain the given
+property, with no other unnecessary pairs added in. 
 
 The reflexive, symmetric, transitive closure of 
 r is the smallest relation that contains r and 
@@ -24,7 +27,8 @@ relation will be an equivalence relation.
 A pair (a, b) is in the reflexive closure of r if
 (a, b) is in r or if (a = b).
 -/
-def reflexive_closure := λ (a b : β), (r a b) ∨ (a = b)
+def reflexive_closure := 
+  λ (a b : β), (r a b) ∨ (a = b)
 
 /-
 Exercise: what pairs are in the reflexivee closure of
@@ -39,7 +43,8 @@ r = {}
 A pair (a, b) is in the symmetric closure of r if 
 (a, b) is in r or if (b, a) is i r.
 -/
-def symmetric_closure := λ (a b : β), (r a b) ∨ (r b a)
+def symmetric_closure := 
+  λ (a b : β), (r a b) ∨ (r b a)
 
 /-
 Consider a set, s = {0, 1, 2, 3} and a binary relation
@@ -138,5 +143,8 @@ computer science. That suggests something about teaching
 first-order logic as a first logic for computer science:
 there's real reason to doubt that it's the best choice.
 The higher-order predicate logic of Lean and similar
-modern proof assistants is strictly more expressive.
+modern proof assistants is strictly more expressive,
+and that makes it easier (even possible) to express ideas
+in high-order predicate logic than first-order predicate
+logic.
 -/
