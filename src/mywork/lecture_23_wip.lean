@@ -29,7 +29,7 @@ def subrelation (q r : β → β → Prop) := ∀ ⦃x y⦄, q x y → r x y
 Commonly employed properties of relations
 -/
 
-def total := ∀ x y, x ≺ y ∨ y ≺ x
+def total := ∀ x y, x ≺ y ∨ y ≺ x --also called strongly connected 
 /-
 Note: we will use "total" later to refer to a different
 property of relations that also satisfy the constraints

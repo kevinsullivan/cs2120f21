@@ -5,7 +5,22 @@ State formally and prove the proposition
 that congruence mod n is an equivalence
 relation. Follow the steps below.
 -/
+def divides (m n : ℕ) := ∃ k, n = k * m
 
+example : ∀ n, divides 1 n :=
+begin
+  unfold divides,
+  assume n,
+  apply exists.intro _ _,
+  --one
+  apply n,
+  
+  --two
+
+  ring,
+    
+
+end
 /-
 First, we need to define congruence mod n.
 Technically it is defined not only on the

@@ -96,7 +96,7 @@ variables {α β : Type}  (r : β → β → Prop)
 def reflexive_closure := λ (a b : β), (r a b) ∨ (a = b)
 
 -- bug ???
-def symmetric_closure := λ (a b : β), (r a b) → (r b a)
+def symmetric_closure := λ (a b : β), (r a b) ∨ (r b a)
 
 /-
 Let's look examples. What's in the reflexive closure
@@ -158,7 +158,7 @@ namespace hidden
 
 inductive tc {α : Type} (r : α → α → Prop) : α → α → Prop
 | base  : ∀ a b, r a b → tc a b
-| trans : ∀ a b c, tc a b → tc b c → tc a c
+| trans : ∀ a b c, tc a b → tc b c → tc a c -- second rule generates all the connections that are indirectly connected 
 
 
 end hidden 
@@ -183,7 +183,8 @@ modern proof assistants is strictly more expressive.
 
 
 /-
-ORDERING RELATIONS
+ORDERING RELATIONS - puts things in an order
+if things go back (symetric) we can have our strict order so needs to be anti_symmetric 
 -/
 
 namespace relations
@@ -201,8 +202,8 @@ local infix `≺`:50 := r
 -/
 def strict_ordering :=  asymmetric r ∧ transitive r
 def ordering :=         reflexive r ∧ anti_symmetric r ∧ transitive r
-def partial_order :=    reflexive r ∧ anti_symmetric r ∧ transitive r ∧ ¬ total r
-def total_order :=      reflexive r ∧ anti_symmetric r ∧ transitive r ∧ total r
+def partial_order :=    reflexive r ∧ anti_symmetric r ∧ transitive r ∧ ¬ total r --add this to vocab, subset inclusion on the powerset of a given set. 
+def total_order :=      reflexive r ∧ anti_symmetric r ∧ transitive r ∧ total r -- or ordering r ∧ strong;y_connected r
 
 /-
 Exercise: We started our discussion of properties of binary relations on 
