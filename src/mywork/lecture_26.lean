@@ -110,7 +110,7 @@ def dom_res (r : α → β → Prop) (s : set α) : α → β → Prop :=
   λ a b, a ∈ s ∧ r a b
 
 def ran_res (r : α → β → Prop) (s : set β) : α → β → Prop := 
-_
+ λ a b , b ∈ s ∧ r a b
 
 
 /-

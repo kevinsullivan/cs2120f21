@@ -49,6 +49,27 @@ begin
   contradiction,
 end
 
+/-
+English-language proof:
+Given that there is a b of type β and a proof that for all objects of type
+β x and y if there exists a binary relation from x to y, then there is not a 
+binary relation between y and x then it is not true that there exists a 
+binary relation from an object to itself. To prove this first assume 
+the existence of b and the assymetry described above. Then apply the 
+introduction rule for not and assume the reflexive relation to only need 
+a proof of false. From here a case analysis of the existence of b provides
+a proof of true and b of type β. From this, we can produce a proof of the
+binary relation r b b using the assumed rule of reflexivity and a proof of 
+¬ r x x by applying the assymetry relation to r b b. This produces a 
+contradiction which proves false. 
+
+
+If you remove the first condition:
+If b is uninhabited then the proposition isn't true because in an empty set 
+there are no binary relations r x y so the conditions for assymetry are never met
+and therefore no contradiction can be formed to reflexivity. 
+-/
+
 
 
 /-
@@ -84,6 +105,9 @@ begin
   contradiction,
 end
 
+/-
+Added the premise (∃ (b: β), true) in order to prove the proposition
+-/
 
 
 
@@ -114,6 +138,10 @@ begin
   have xin21 := s2subs1 x,
   exact xin21,
 end
+
+/-
+Given sets s s1 and s2 of type β 
+-/
 
 
 /-
@@ -231,17 +259,32 @@ begin
   unfold transitive,
   unfold asymmetric,
   assume irrrefl,
-  assume asym,
+  assume trans,
   assume x y,
   assume rxy,
   apply not.intro,
-  
+  assume ryx,
+  have nrxx := irrrefl x,
+  have rxx : r x x := trans rxy ryx,
+  contradiction,
 end
 
 -- C
-example : transitive r → ¬ symmetric r → ¬ irreflexive r :=
+example : (∃ (x : β ), true) → transitive r → ¬ symmetric r → ¬ irreflexive r :=
 begin
+  unfold transitive,
+  unfold symmetric,
+  unfold irreflexive,
+  assume x,
+  assume trans,
+  assume nsymm,
+  apply not.intro,
+  assume irrefl,
+  /-
+  This is impossinle to prove. There is no way to construct a proof of 
+  r x x with a proof of transitivity and not symmetry, therefore there is 
+  no way to prove that irreflexive r implies false. 
+  -/
 end
-
 
 end relation
