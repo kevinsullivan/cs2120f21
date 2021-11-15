@@ -1,5 +1,5 @@
-import .lecture_26
 import data.set
+import .lecture_26
 
 namespace relations
 section functions

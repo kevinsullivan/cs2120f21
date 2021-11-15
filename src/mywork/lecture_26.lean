@@ -64,24 +64,24 @@ that follow is specified by the type α, and
 that the co-domain set is specificed by the
 β type.
 -/
-def domain_of_definition (r : α → β → Prop) : set α := 
+def dom_of_def (r : α → β → Prop) : set α := 
   { a : α | true } 
 
-#check @domain_of_definition
+#check @dom_of_def
 
 
-def domain (r : α → β → Prop) := { a : α | ∃ b, r a b }
-def co_domain (r : α → β → Prop) := { b : β | true }
+def dom (r : α → β → Prop) := { a : α | ∃ b, r a b }
+def co_dom (r : α → β → Prop) := { b : β | true }
 def range (r : α → β → Prop) := { b : β | ∃ (a : α), r a b  }
 
 -- EXAMPLE
 def R : ℕ → string → Prop := λ n m, n = m.length
-#check domain_of_definition R
-#reduce domain_of_definition R
-#check co_domain R
-#reduce co_domain R -- what set?
-#check domain R
-#reduce domain R    -- a set, right?
+#check dom_of_def R
+#reduce dom_of_def R
+#check co_dom R
+#reduce co_dom R -- what set?
+#check dom R
+#reduce dom R    -- a set, right?
 #check range R
 #reduce range R     -- a set, right?
 
