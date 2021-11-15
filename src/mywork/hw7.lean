@@ -140,7 +140,20 @@ begin
 end
 
 /-
-Given sets s s1 and s2 of type β 
+You are given sets s s1 and s2 of type β where s1 and s2 are in the powerset of s. 
+You are also given that s1 is a subset of s2 and s2 is a subset of s1. Prove that 
+s1 = s2. s1 = s2 can be rewritten as ∀ (x : β), x ∈ s1 ↔ x ∈ s2. From here we can 
+assume x and apply the introduction rule for iff to split the proof into two proofs
+x ∈ s1 → x ∈ s2 and x ∈ s2 → x ∈ s1. 
+First direction:
+Using the proofs of x and that s1 is a subset of s2 we can construct a proof that 
+x ∈ s1 → x ∈ s2 which is what we are trying to prove and therefore the first 
+disjunct is true. 
+Second direction:
+Using the proofs of x and that s2 is a subset of s1 we can construct a proof that 
+x ∈ s2 → x ∈ s1 which is what we are trying ot prove and therefore the second disjunct
+is true. 
+With both directions being true, the overall proposition is true. 
 -/
 
 
@@ -170,6 +183,13 @@ begin
   ring,
 end
 
+/-
+Prove that for all natural numbers n, 1 divides n. First assume n is of type 
+ℕ. From here we must prove that there exists a value k such that n = k * 1. A
+pplying the introduction rule we can say k is equal to n which changes our proof t
+o one of n = n * 1. This is true by basic algebra. 
+-/
+
 -- B. For any n, n divides n
 example : ∀ n, divides n n :=
 begin
@@ -178,6 +198,13 @@ begin
   apply exists.intro 1,
   ring,
 end
+
+/-
+Prove that for all natural numbers n, n divides n. First assume n is of type
+ℕ. From here we must prove that there exists a k such that n = k * n. Applying 
+the introduction rule of exists with the value 1 yields n = 1 * n. This is true
+by basic algebra. 
+-/
 
 -- #C. prove that divides is reflexive 
 example : reflexive divides :=
@@ -188,6 +215,14 @@ begin
   apply exists.intro 1,
   ring,
 end 
+
+
+/-
+Prove that for all x of type ℕ, x divides x. First assume x is an arbitrary value
+of type ℕ. Now you must prove that there exists some k such that x = k * x. From 
+here you can apply the introduction rule of exists with the value 1 to yield
+x = 1 * x. This is true by basic algebra. 
+-/
 
 -- #D. prove that divides is transitive
 example : transitive divides :=
@@ -205,13 +240,29 @@ begin
   ring,
 end 
 
+/-
+Prove that for all x, y, and z of type ℕ if x divides y and y divides z then x 
+divides z. First assume x y and z of type ℕ, x divides y, and y divides z. then
+apply a case analysis of x divides y and y divides z to have proofs that 
+n and n1 are values of type ℕ, y = n * x, and z = n1 * y. You want to prove that 
+there exists a value k such that z = k * x. Apply the introduction rule of 
+exists with (n * n1) to yield z = n * n1 * x. Now we can use the proof that 
+z = n1 * y to rewrite the proof to be n1 * y = n * n1 * x. Next we can use the proof
+that y = n * x to rewrite the proof to be n * n1 * x = n * n1 * x. This is true by 
+basic algebra. 
+-/
+
 /- 
 E. Is divides symmetric? if yes, give a proof, otherwise 
 give a counterexample and a brief explanation to show that 
 it's not.
 -/
 
--- Answer here
+/-
+No, divides is not symmetric in the natural numbers. A counterexample is 3 and 9. 
+3 divides 9 but 9 does not divide 3. This is because 9 = 3 * 3, but there is no 
+natural number k that satisfies 3 = k * 9. 
+-/
 
 /- 
 #F. Prove that divides is antisymmetric. 
@@ -252,6 +303,17 @@ begin
   contradiction,
 end
 
+/-
+Assumme that a binary relation r is asymmetric, prove that that means it is 
+also irreflexive. First assume that r is asymmetric which means that for all
+x and y of arbitrary type β if x is related to y, y is not related to x. Next, we 
+can assume that r is reflexive and prove that is false to prove that r is 
+irreflexive. By the reflexive property we can assume a proof of r x x. Then, 
+we can use the proof of asymmetry on the proof of r x x to create a proof of 
+¬ r x x. This creates a contradiction, proving the reflexive property false and the
+irreflexive property true. 
+-/
+
 -- B
 example : irreflexive r → transitive r → asymmetric r :=
 begin
@@ -269,6 +331,18 @@ begin
   contradiction,
 end
 
+/-
+Prove that given a relation r that is irreflexive and transitive, it is
+asymmetric. First assume that r is irreflexive and transitive. Then assume x and 
+y are objects of an arbitrary type β. Asymmetry says that for all x and y if x 
+is related to y, y is not related to x. To prove this we can assume a proof that
+x is related to y and build a proof that y is not related to x to prove that
+the relation is asymmetric. Through the proof of irreflexivity we can construct a 
+proof of ¬ r x x. From here, if r were symmetric then the transitive property 
+could be used with r x y and r y x to create a proof of r x x which direclty
+contradicts the ¬ r x x from before. Therefore r must be asymmetric.  
+-/
+
 -- C
 example : (∃ (x : β ), true) → transitive r → ¬ symmetric r → ¬ irreflexive r :=
 begin
@@ -280,10 +354,11 @@ begin
   assume nsymm,
   apply not.intro,
   assume irrefl,
+  cases x with x pf,
+  have nrxx := irrefl x,
   /-
-  This is impossinle to prove. There is no way to construct a proof of 
-  r x x with a proof of transitivity and not symmetry, therefore there is 
-  no way to prove that irreflexive r implies false. 
+  This is impossinle to prove. It is possible to create a proof of ¬ r x x but no 
+  way to create a contradiction to prove the overall proposition false.  
   -/
 end
 
