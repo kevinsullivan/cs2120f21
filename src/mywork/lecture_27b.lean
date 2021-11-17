@@ -127,7 +127,10 @@ example :
   surjective r → 
   image_set r (dom r) = { b : β | true } :=
 begin
--- homework
+  unfold surjective,
+  unfold image_set,
+  assume sur,
+  
 end
 
 /-
