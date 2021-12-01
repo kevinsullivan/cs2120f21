@@ -530,6 +530,7 @@ False? Present a counterexample.
 -/
 def bij_trans (s : β → γ → Prop)  (r : α → β → Prop) :
   bijective r → bijective s → bijective (composition s r) := 
+<<<<<<< HEAD
   begin
     assume r_bij s_bij,
     cases r_bij with r_sur r_inj,
@@ -640,6 +641,34 @@ def bij_trans (s : β → γ → Prop)  (r : α → β → Prop) :
     have pf := r_1to1 rxb1 ryb1,
     exact pf,
   end
+=======
+begin
+assume br bs,
+split,
+-- surjective
+unfold surjective,
+split,
+  -- compoisition total
+  unfold total_function,
+  split,
+   -- composition is a function
+   unfold function single_valued,
+   assume x y z srxy srxz,
+   unfold bijective at br bs,
+   cases bs,
+   cases br,
+   unfold composition at srxy srxz,
+   unfold surjective at  bs_left,
+   unfold surjective at  br_left,
+   unfold injective at br_right bs_right,
+   cases bs_left,
+   cases br_left,
+   cases bs_right,
+   cases br_right,
+   -- composition is defined for all α 
+-- injective
+end
+>>>>>>> 6f27f36e4b709f7b78ff25e03754972eb8fa31f2
 
 /-
 In general, an operation (such as inverse, here) that, 
