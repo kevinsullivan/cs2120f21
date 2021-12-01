@@ -5,7 +5,22 @@ State formally and prove the proposition
 that congruence mod n is an equivalence
 relation. Follow the steps below.
 -/
+def divides (m n : ℕ) := ∃ k, n = k * m
 
+example : ∀ n, divides 1 n :=
+begin
+  unfold divides,
+  assume n,
+  apply exists.intro _ _,
+  --one
+  apply n,
+  
+  --two
+
+  ring,
+    
+
+end
 /-
 First, we need to define congruence mod n.
 Technically it is defined not only on the
@@ -82,17 +97,19 @@ begin
   assume k,
   unfold cong_mod,
   apply exists.intro (0:ℤ),
-  ring, 
+  ring, -- accept without proof for now, we could use admit here aswell
 
   -- symmetric
   split,
   unfold symmetric cong_mod,
   assume x y h,
-  cases h with v pf,
+  cases h with v pf, --just applies the elimination rule
   apply exists.intro (-v),
-  ring,
-  rw <-pf,
-  ring,
+  have lemma1 : -v * n = -(v * n) := sorry,
+  rw lemma1,
+  rw <-pf, -- arrow is the direction you use the equality to do the rewritting 
+  have lemma2 : y - x = -(x - y) := sorry,
+  rw <-lemma2,
 
   -- transitive
      -- you prove it
@@ -105,7 +122,7 @@ begin
   rw int.distrib_right _ _ _,     -- LIBRARY LOOKUP!
   rw <-h2pf,
   rw <-h1pf,
-  ring, -- the rest is true by simple algebra 
+  ring, 
 end
 
 /-
@@ -136,8 +153,40 @@ begin
   exact rfl,
 end
 
-
--- You prove it
-example : ∀ n, equivalence (cong_mod_nat n) :=
+example (n : ℕ): equivalence (cong_mod_nat n) :=
 begin
-end
+  unfold equivalence,
+  apply and.intro _ _,
+
+  --reflexive
+  unfold reflexive,
+  assume x,
+  unfold cong_mod_nat,
+
+  --symmetric 
+
+  apply and.intro _ _,
+  unfold symmetric,
+  unfold cong_mod_nat,
+  assume x y nxy,
+  exact eq.symm nxy,
+  
+  
+
+  --transitive 
+  unfold transitive,
+  unfold cong_mod_nat,
+  assume x y z xnyn ynzn,
+  rw xnyn,
+  exact ynzn,
+  
+  end
+-- a ring is something that has number like things (+ and X ect), a restricted language. You can create automated functions 
+/-
+To show that modular congruency is a equivalence relationship it is sufficent to show 1) it is reflexive 2) it is symmetric and 3) it is transitive.
+These three individual proofs can be combined trivially using the introduction rule for and. 
+Reflexivity is proved by showing that any x % n is = x % n by way of the reflexivity property of equality. 
+Symmetry is proven by an arbitrary use of the symmetric property of equality to show that x%n = y%n implies y%n = x%n.
+Transivity is proven by subituting the two assumed truths into the goal until a trivial equality is achieved. 
+QED
+-/
