@@ -5,7 +5,8 @@ namespace relation
 -- Alexander Sosnkowski
 
 /-
-homework advice
+
+homework advice from lecture, ignore
 x = k1 n
 y = k2 x
 rw to y = k1 (k2 x)
@@ -54,14 +55,15 @@ the first condition, that β is inhabited? Briefly explain
 your answer (in English).
 -/
 /-
-English proof:
-To begin the proof it is adventageous to look at the formal defenitions for 
+English proof: To begin the proof it is adventageous to look at the formal defenitions for 
 asymmetric and not reflexive. If a binary relation is asymmetric then we know
 that for every pair of β values if x is related to y, than y is not related to x.
-Similarly, not reflexive means that if we assume reflexivity, we can find a contradiction.
-In this particular case if we assume reflexivity for x is related to x we can obtain a proof
+Similarly, not reflexive means that if we assume we have some b of type β(inhabitted) and
+asymmetry. We then show not reflexive by assuming reflexivity and then showing a contradiction follows.
+In this particular case, if we assume reflexivity for x is related to x we can obtain a proof
 that x is related to x. We can use this proof to obtain a proof that x is not related to x
 by way of our asymmetric property as r x x → ¬ r x x. This is a clear contradiction.
+
 QED
 
 -/
@@ -235,7 +237,11 @@ begin
 end 
 
 /-
-Informal English Proof: 
+Informal English Proof: We can show that divides is transitive on the natural numbers by showing that if
+x divides y and y divides z then x divides z by looking towards our defenitions. we must prove z = x * k
+Since y = x * k1 and z = y * k2, we can use basic subsitution rules to rewrite z = (x * k1) * k2
+and through basic algebra we see z = x * (k1 * k2) where k1 * k2 is just some other constant.
+thus x divides z QED
 -/
 
 /- 
@@ -249,6 +255,7 @@ it's not.
 -- 5 * 6 = 30
 -- 30 * 1/6 = 5 
 -- but, 1/6 is not a natural number 
+
 
 /- 
 #F. Prove that divides is antisymmetric. 
@@ -265,6 +272,14 @@ begin
   rw k11,
   ring,
 end
+
+/-
+We can show that divides is anti_symmetric by showing that x divides y implies y divides x only when x = y.
+If we know x divides y and y divides x (i.e y = k * x and x = k * y)
+then it can be shown through subsitution that x = y is rewrittable as x = k * x
+by assuming k = 1 and through some basic algebra we can show x = x which by the reflexive property
+of equality is true and thus QED
+-/
 
 
 /- #4
@@ -300,15 +315,38 @@ example : transitive r → ¬ symmetric r → ¬ irreflexive r :=
 begin
   unfold transitive symmetric irreflexive,
   assume rxyyzxz notrxyyx notrxx,
+  --here is where I begin to run into issues so I assume it is inhabbited and a relation exists
+  /- this is an example where it would work / be true but it is not true for all cases!
   have x : β := sorry,
-  have rxx : r x x := sorry,
+  have y : β := sorry,
+  have rxy : r x y := sorry,
+  have ryx : r y x := sorry,
+  --have rxx : r x x := sorry,
   have f1 := notrxx x,
-  have f2 := rxyyzxz rxx rxx,
+  have f2 := rxyyzxz rxy ryx,
   contradiction,
-
+  -/
 end
 /-
-Informal English Proof:
+Informal English Proof: If something is transitive and not symmetric, then
+we can not definetly say it is no irreflexive (i.e there exists some reflexive relation).
+
+imagine 
+objects a and b
+The map 
+
+{
+
+r a a
+r a b
+
+}
+
+This is transitive, not symmetric as r b a is not true, and still reflexive as r a a.
+
+
+( a )-----> ( a ) ------> ( b )
+
 
 -/
 
