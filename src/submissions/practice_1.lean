@@ -1,4 +1,12 @@
 /-
+eman
+jmb4zz https://github.com/jbrady1203/cs2120f21.git
+hae3ra https://github.com/jackdebk/cs2120f21.git
+qbu8hp https://github.com/vtarashansky/cs2120f21.git
+-/
+
+
+/-
 EQUALITY
 -/
 
@@ -13,6 +21,10 @@ this question that makes it much easier to answer than it might
 at first appear.
 -/
 
+/-
+Assume x, y, z, and w are arbitrary objects of a type T. Assume x=y
+y=z and, w=z. z=w through the theorem of symmetry in equality applied to w=z.
+-/
 
 
 /- #2
@@ -24,11 +36,8 @@ all propositions in Lean).
 -/
 
 def prop_1 : Prop := 
-<<<<<<< HEAD
-  _xs
-=======
-  ∀ (T : Type) (x y z w : T), x = y → y = z → w = z → z = w
->>>>>>> 289938d4d64bfdbe1db71208069fe4a3145149fc
+  ∀ (T:Type) (x y z w : T), x=y → y=z → w=z → z=w
+
 
 /- #3 (extra credit)
 Give a formal proof of the proposition from #2 by filling in
@@ -39,9 +48,12 @@ again, called eq.refl, eq.subst, eq.symm, eq.trans.
 
 theorem prop_1_proof : prop_1 := 
 begin
+  unfold prop_1,
   assume T x y z w,
-  assume xy yz zw,
-  exact eq.symm zw,
+  assume e1,
+  assume e2,
+  assume e3,
+  apply eq.symm e3,
 end
 
 /-
@@ -55,38 +67,18 @@ what do you do? (I'm being a little informal in leaving out the
 type of X.) 
 -/
 
-/-
-Assume you;re given an arbitrary but specific x, show that 
-it satisfies P;  because the choice  was arbirtrary, P must be
-true of any x (you could have picked any of them!)-/
+/- 
+Assume a arbitrary object of an arbititrary type. If you prove the rule 
+for that object of that type, it applies to all types and objects
+-/
 
 /- #5
 Suppose you have a proof, let's call it pf, of the proposition,
 (∀ x, P x), and you need a proof of P t, for some particular t.
 Write an expression then uses the elimination rule for ∀ to get
 such a proof. Complete the answer by replacing the underscores
-in the following expression: ( _ _ ). 
+in the following expression: (P t := pf t).
 -/
-
-
-axioms 
-(Ball : Type)
-(blue : Ball → Prop)
-(allBallsBlue : ∀ (b : Ball), blue b)
-(tomsBall : Ball)
-
-theorem tomsBallIsBlue : blue tomsBall := 
-  allBallsBlue tomsBall
-
-#check allBallsBlue
-
-example : ∀ (P Q : Prop), P ∧ Q → Q ∧ P :=
-begin
-  assume P Q h,
-  have p : P := h.left,
-  have q : Q := h.right,
-  exact and.intro q p,
-end
 
 /-
 IMPLIES: →
@@ -109,7 +101,7 @@ Hint: put parenthesis around "n + 1" in your answer.
 -/
 
 def successor_of_even_is_odd : Prop := 
-  ∀ (n : ℕ), ev n → odd (n + 1)
+  ∀ (n : ℕ), ev n → odd (n+1)
 
 /- #7
 Suppose that "its_raining" and "the_streets_are_wet" are
@@ -135,7 +127,10 @@ you are asked to use the elimination rule for →.
 axiom pf_raining : raining
 
 example : streets_wet :=
- if_raining_then_streets_wet pf_raining
+  begin
+    apply if_raining_then_streets_wet,
+    exact pf_raining,
+  end
 
 /- 
 AND: ∧
@@ -182,7 +177,11 @@ theorem and_associative :
 begin
   intros P Q R h,
   have p : P := and.elim_left h,
-  have q : Q := (and.elim_right h).left
+  have qr : Q ∧ R := and.elim_right h,
+  have q : Q := and.elim_left qr,
+  have r : R := and.elim_right qr,
+  have pq: P∧Q := and.intro p q,
+  apply and.intro pq r,
 end
 
 /- #11
@@ -200,6 +199,18 @@ _____ to a proof of (P ∧ Q) and a proof of R.
 What remains, then, is to obtain these proofs.
 But this is easily done by the application of
 ____ to ____. QED. 
+
+
+Proof. We assume that P, Q, and R are arbitrary but
+specific propositions, and that we have a proof called 
+p_qr of (P ∧ (Q ∧ R)) by application of ∧ and →
+introduction. What reamins to be proved is ((P ∧ Q) ∧ R).
+We can first use the elimination rule of and to seperate 
+to a proof of P and a proof of Q ∧ R. From there, the 
+elimination rule can be applied again to obtain a proof of Q 
+and a proof of R. Through the introduction rule of and we 
+obtain a proof of P ∧ Q. Finally through the introduction 
+rule of and we can obtain ((P ∧ Q) ∧ R). QED.
 -/
 
 
